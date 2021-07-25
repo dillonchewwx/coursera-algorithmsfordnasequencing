@@ -145,14 +145,6 @@ def naive_with_counts(p, t):
         num_alignments += 1
     return occurrences, num_alignments, num_character_comparisons
 
-def naive_2mm(p,t):
-    occurrences = []
-    # don't consider reverse complement here
-    for i in range(len(t) - len(p) + 1): # loop over alignments
-        if HammingDistance(p, t[i:i+len(p)]) <= 2: # compare forward strand
-            occurrences.append(i)
-    return occurrences
-
 def HammingDistance(p, q):
     return sum(a != b for a, b in zip(p,q))
 
@@ -164,13 +156,6 @@ def readGenome(filename):
             if not line[0] == '>':
                 genome += line.rstrip()
     return genome
-
-def reverseComplement(s):
-    complement = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A', 'N': 'N'}
-    t = ''
-    for base in s:
-        t = complement[base] + t
-    return t
     
 if __name__ == "__main__":
     main()
