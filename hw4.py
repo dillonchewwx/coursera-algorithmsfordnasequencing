@@ -51,25 +51,6 @@ def greedy_scs(reads, k):
         read_a, read_b, overlap_length = pick_maximal_overlap(reads, k)
     return "".join(reads)
 
-def overlapMap(reads, k):
-    # Let every k-mer in the dataset have an associated Python set object.
-    # Use dictionary to associate each k-mer with its corresponding set
-    kmers_set = {}
-    for read in reads:
-        kmers = getKmer(read, k)
-        for kmer in kmers:
-            if not kmer in kmers_set.keys():
-                kmers_set[kmer] = set()
-            kmers_set[kmer].add(read) # For every k-mer in a read, we add the read to the set object corresponding to that k-mer.
-            
-    # For each read a, find all overlaps involving a suffix of a by taking a's length-k suffix and find all reads containing that k-mer and call overlap for each.
-    overlaps = {}
-    for a in reads:
-        for b in kmers_set[suffix(a, k)]:
-            if a != b and overlap(a, b, k): # ignore same reads and ensure at least 30 overlaps
-                overlaps[(a, b)] = overlap(a, b, k)
-    return overlaps
-
 def getKmer(read, k):
     kmer = set()
     for i in range(len(read)-k+1):
